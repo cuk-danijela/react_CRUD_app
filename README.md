@@ -1,12 +1,46 @@
-# api/htaccess
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.php [L]
+
+
+# Github repo
+https://github.com/cuk-danijela/react_CRUD_app
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
+# Task: Building a simple CRUD application using React and PHP
+
+Overview:
+
+You will be building a simple application that allows users to create, read, update and delete records from a database. The application will consist of a front-end built using React and a back-end built using PHP. You will be responsible for implementing both the front-end and back-end components of the application.
+
+Requirements:
+
+- The front-end should be built using React and should use hooks to manage state.
+- The back-end should be built using PHP and should use PDO to connect to a MySQL database.
+- The application should have a simple UI that allows users to create, read, update and delete records from the database.
+- The application should validate user input and display appropriate error messages when necessary.
+- The source code should be pushed to a public GitHub repository and the link to the repository should be included in the     README file.
+
+Bonus points:
+
+- Implement authentication using JSON Web Tokens (JWT) to protect the application from unauthorized access.
+- Use React Router to implement client-side routing and improve the user experience.
+- Use a CSS framework like Bootstrap or Material UI to improve the visual design of the application.
+
+
+# Getting Started with React CRUD application
+
+1. Set up the development environment
+- Install a web server like Apache or Nginx, PHP, and MySQL on your local machine
+- Install Node.js and npm
+- Create a new React project using create-react-app
+- Install required dependencies like axios and react-router-dom
+
+2. Create a MySQL database
+- Create a table to store the data
+- Define the table schema with fields like id, name, email, etc.
 
 # Create database
 CREATE DATABASE react_crud_app;
-
 # Create users table
 CREATE TABLE `react_crud_app`.`users`
 (
@@ -18,12 +52,21 @@ CREATE TABLE `react_crud_app`.`users`
     `updated_at` timestamp, PRIMARY KEY (id)
 );
 
+3. Create a PHP API to perform CRUD operations
+- Create a new PHP file to handle API requests
+- Define functions to perform CRUD operations like create, read, update, and delete
+- Use mysqli or PDO to interact with the MySQL database
+
+4. Create a React front-end to consume the API
+- Use axios to fetch data from the PHP API and display it in the component
+- Create a form component to allow users to add new data
+- Use axios to send data to the PHP API to create new records
+- Create an edit component to allow users to edit existing data
+- Use axios to send data to the PHP API to update records
+- Create a delete component to allow users to delete existing data
+- Use axios to send requests to the PHP API to delete records
 
 
-
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
