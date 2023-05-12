@@ -1,3 +1,26 @@
+# api/htaccess
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+
+# Create database
+CREATE DATABASE react_crud_app;
+
+# Create users table
+CREATE TABLE `react_crud_app`.`users`
+(
+    `id` int NOT NULL auto_increment,
+    `name` varchar(50),
+    `email` varchar(60),
+    `mobile` bigint(10),
+    `created_at` timestamp,
+    `updated_at` timestamp, PRIMARY KEY (id)
+);
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
