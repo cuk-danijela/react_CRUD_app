@@ -8,17 +8,17 @@ function UserEdit() {
     const navigate = useNavigate();
     const [inputs, setInputs] = useState([]);
     const { id } = useParams();
+    let [status, setStatus] = useState({});
 
-    
     useEffect(() => {
         getUser();
     }, []);
 
     function getUser() {
         axios.get(`http://localhost:80/api/user/${id}`)
-        .then(function (response) {
-            setInputs(response.data);
-        });
+            .then(function (response) {
+                setInputs(response.data);
+            });
     }
 
     const handleChange = (event) => {
@@ -30,18 +30,23 @@ function UserEdit() {
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.put(`http://localhost:80/api/user/${id}/edit`, inputs)
-        .then(function (response) {
-            navigate('/');
-        });
-        
+            .then(function (response) {
+                status = (response.data.status);
+                setStatus(status);
+                setTimeout(() => {
+                    navigate('/');
+                }, 2000);
+
+            });
+
     }
 
-        return (
-            <>
-                <h1 className="text-center mb-5 mt-5">Edit user</h1>
-                <EditUserForm inputs={inputs} handleChange={handleChange} handleSubmit={handleSubmit} />
-            </>
-        )
-    }
+    return (
+        <>
+            <h1 className="text-center mb-5 mt-5">Edit user</h1>
+            <EditUserForm inputs={inputs} handleChange={handleChange} handleSubmit={handleSubmit} status={status}/>
+        </>
+    )
+}
 
-    export default UserEdit;
+export default UserEdit;

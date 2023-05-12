@@ -8,6 +8,7 @@ function UserCreate() {
     const navigate = useNavigate();
     const [inputs, setInputs] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
+    let [status, setStatus] = useState({});
 
 
     const handleSubmit = (event) => {
@@ -16,7 +17,11 @@ function UserCreate() {
         axios.post('http://localhost:80/api/user/save', inputs)
             .then(function (response) {
                 console.log(response.data);
-                navigate('/');
+                status = response.data.status;
+                setStatus(status);
+                setTimeout(() => {
+                    navigate('/');
+                }, 2000);
             });
 
     }
@@ -25,7 +30,6 @@ function UserCreate() {
         const name = e.target.name;
         const value = e.target.value;
         setInputs(values => ({ ...values, [name]: value }));
-        console.log(value);
 
         // if (value.length < 3) {
         //     setErrorMessage('Input must be at least 3 characters long');
@@ -51,7 +55,7 @@ function UserCreate() {
     return (
         <>
             <h1 className="text-center mb-5 mt-5">Create new user</h1>
-            <CreateUserForm handleSubmit={handleSubmit} handleChange={handleChange} errorMessage={errorMessage} />
+            <CreateUserForm handleSubmit={handleSubmit} handleChange={handleChange} errorMessage={errorMessage} status={status} />
         </>
     )
 }

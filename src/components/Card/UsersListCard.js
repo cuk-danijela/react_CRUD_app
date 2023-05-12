@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
-import { BsPersonCheck, BsEnvelopeAt, BsTelephoneForward, BsPencilSquare, BsFillPersonXFill, BsClipboardPlus } from "react-icons/bs";
+import { BsPersonCheck, BsEnvelopeAt, BsTelephoneForward, BsPencilSquare, BsFillPersonXFill } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 
 
@@ -10,9 +10,7 @@ function UserListCard({ usersList, deleteUser }) {
 
     return (
         <div className='row d-flex justify-content-center gap-3'>
-            <div className="d-grid text-center mb-5">
-                <Link to="user/create"><button className="btn btn-warning w-50" type="button">Create new user <BsClipboardPlus /></button></Link>
-            </div>
+            
             {usersList.map((user, key) => (
                 <Card className="col-md-3" border="warning" key={key}>
                     <Card.Header className='bg-transparent'>

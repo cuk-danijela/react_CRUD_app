@@ -9,7 +9,7 @@ function Navigation() {
                 <div className="container-fluid">
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
-                            <Link className="nav-link" to="/">List users</Link>
+                            <Link className="nav-link" to="/">User list</Link>
                             <Link className="nav-link" to="user/create">Create user</Link>
                         </div>
                     </div>
