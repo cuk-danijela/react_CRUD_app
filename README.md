@@ -1,6 +1,6 @@
 
 
-# Github repo
+** Github repo ** 
 https://github.com/cuk-danijela/react_CRUD_app
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -29,19 +29,20 @@ Bonus points:
 
 # Getting Started with React CRUD application
 
-1. Set up the development environment
+### 1. Set up the development environment
 - Install a web server like Apache or Nginx, PHP, and MySQL on your local machine
 - Install Node.js and npm
 - Create a new React project using create-react-app
 - Install required dependencies like axios and react-router-dom
 
-2. Create a MySQL database
+### 2. Create a MySQL database
 - Create a table to store the data
 - Define the table schema with fields like id, name, email, etc.
 
-# Create database
+** Create database **
 CREATE DATABASE react_crud_app;
-# Create users table
+
+** Create users table **
 CREATE TABLE `react_crud_app`.`users`
 (
     `id` int NOT NULL auto_increment,
@@ -52,12 +53,12 @@ CREATE TABLE `react_crud_app`.`users`
     `updated_at` timestamp, PRIMARY KEY (id)
 );
 
-3. Create a PHP API to perform CRUD operations
+### 3. Create a PHP API to perform CRUD operations
 - Create a new PHP file to handle API requests
 - Define functions to perform CRUD operations like create, read, update, and delete
 - Use mysqli or PDO to interact with the MySQL database
 
-4. Create a React front-end to consume the API
+### 4. Create a React front-end to consume the API
 - Use axios to fetch data from the PHP API and display it in the component
 - Create a form component to allow users to add new data
 - Use axios to send data to the PHP API to create new records
