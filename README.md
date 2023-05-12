@@ -1,9 +1,8 @@
 
 
-** Github repo ** 
+** Github repository ** 
 https://github.com/cuk-danijela/react_CRUD_app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
 # Task: Building a simple CRUD application using React and PHP
@@ -39,10 +38,8 @@ Bonus points:
 - Create a table to store the data
 - Define the table schema with fields like id, name, email, etc.
 
-** Create database **
 CREATE DATABASE react_crud_app;
 
-** Create users table **
 CREATE TABLE `react_crud_app`.`users`
 (
     `id` int NOT NULL auto_increment,
@@ -69,6 +66,7 @@ CREATE TABLE `react_crud_app`.`users`
 
 
 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## Available Scripts
 
 In the project directory, you can run:
