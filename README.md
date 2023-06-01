@@ -1,10 +1,3 @@
-
-
-** Github repository ** 
-https://github.com/cuk-danijela/react_CRUD_app
-
-
-
 # Task: Building a simple CRUD application using React and PHP
 
 Overview:
