@@ -5,40 +5,63 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-include 'dbConnection.php';
+use Google\Cloud\Firestore\FirestoreClient;
+
+require 'vendor/autoload.php'; // Uključivanje Firebase PHP biblioteke
+
+class DbConnect {
+    private $firestore;
+
+    public function __construct() {
+        // Inicijalizacija Firebase Firestore klijenta
+        $this->firestore = new FirestoreClient();
+    }
+
+    public function connect() {
+        return $this->firestore;
+    }
+}
+
 $objDb = new DbConnect;
 $conn = $objDb->connect();
 
 $method = $_SERVER['REQUEST_METHOD'];
 switch($method) {
     case "GET":
-        $sql = "SELECT * FROM users";
+        $collection = $conn->collection('users');
         $path = explode('/', $_SERVER['REQUEST_URI']);
-        if(isset($path[3]) && is_numeric($path[3])) {
-            $sql .= " WHERE id = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $path[3]);
-            $stmt->execute();
-            $users = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (isset($path[3]) && is_numeric($path[3])) {
+            $user = $collection->document($path[3])->snapshot();
+            if ($user->exists()) {
+                $users = [$user->id() => $user->data()];
+            } else {
+                $users = [];
+            }
         } else {
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $usersSnapshot = $collection->documents();
+            $users = [];
+            foreach ($usersSnapshot as $user) {
+                $users[$user->id()] = $user->data();
+            }
         }
 
         echo json_encode($users);
         break;
     case "POST":
-        $user = json_decode( file_get_contents('php://input') );
-        $sql = "INSERT INTO users(id, name, email, phone, created_at) VALUES(null, :name, :email, :phone, :created_at)";
-        $stmt = $conn->prepare($sql);
-        $created_at = date('Y-m-d');
-        $stmt->bindParam(':name', $user->name);
-        $stmt->bindParam(':email', $user->email);
-        $stmt->bindParam(':phone', $user->phone);
-        $stmt->bindParam(':created_at', $created_at);
+        $user = json_decode(file_get_contents('php://input'));
+        $collection = $conn->collection('users');
 
-        if($stmt->execute()) {
+        $created_at = new \DateTime();
+        $data = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'created_at' => $created_at->format('Y-m-d'),
+        ];
+
+        $document = $collection->add($data);
+
+        if ($document) {
             $response = ['status' => 1, 'message' => 'Record created successfully.'];
         } else {
             $response = ['status' => 0, 'message' => 'Failed to create record.'];
@@ -47,17 +70,21 @@ switch($method) {
         break;
 
     case "PUT":
-        $user = json_decode( file_get_contents('php://input') );
-        $sql = "UPDATE users SET name= :name, email =:email, phone =:phone, updated_at =:updated_at WHERE id = :id";
-        $stmt = $conn->prepare($sql);
-        $updated_at = date('Y-m-d');
-        $stmt->bindParam(':id', $user->id);
-        $stmt->bindParam(':name', $user->name);
-        $stmt->bindParam(':email', $user->email);
-        $stmt->bindParam(':phone', $user->phone);
-        $stmt->bindParam(':updated_at', $updated_at);
+        $user = json_decode(file_get_contents('php://input'));
+        $collection = $conn->collection('users');
 
-        if($stmt->execute()) {
+        $updated_at = new \DateTime();
+        $data = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'updated_at' => $updated_at->format('Y-m-d'),
+        ];
+
+        $document = $collection->document($user->id);
+        $document->set($data, ['merge' => true]);
+
+        if ($document) {
             $response = ['status' => 1, 'message' => 'Record updated successfully.'];
         } else {
             $response = ['status' => 0, 'message' => 'Failed to update record.'];
@@ -66,13 +93,12 @@ switch($method) {
         break;
 
     case "DELETE":
-        $sql = "DELETE FROM users WHERE id = :id";
+        $collection = $conn->collection('users');
         $path = explode('/', $_SERVER['REQUEST_URI']);
+        $document = $collection->document($path[3]);
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $path[3]);
-
-        if($stmt->execute()) {
+        if ($document->exists()) {
+            $document->delete();
             $response = ['status' => 1, 'message' => 'Record deleted successfully.'];
         } else {
             $response = ['status' => 0, 'message' => 'Failed to delete record.'];
@@ -80,5 +106,4 @@ switch($method) {
         echo json_encode($response);
         break;
 }
-
 ?>

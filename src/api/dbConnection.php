@@ -1,21 +1,19 @@
-<?php 
-	/**
-	* Database Connection
-	*/
-	class DbConnect {
-		private $server = 'localhost';
-		private $dbname = 'react-crud-app';
-		private $user = 'root';
-		private $pass = '';
+<?php
 
-		public function connect() {
-			try {
-				$conn = new PDO('mysql:host=' .$this->server .';dbname=' . $this->dbname, $this->user, $this->pass);
-				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				return $conn;
-			} catch (\Exception $e) {
-				echo "Database Error: " . $e->getMessage();
-			}
-		}
-	}
- ?>
+use Google\Cloud\Firestore\FirestoreClient;
+
+require 'vendor/autoload.php'; // Uključivanje Firebase PHP biblioteke
+
+class DbConnect {
+    private $firestore;
+
+    public function __construct() {
+        // Inicijalizacija Firebase Firestore klijenta
+        $this->firestore = new FirestoreClient();
+    }
+
+    public function connect() {
+        return $this->firestore;
+    }
+}
+?>
